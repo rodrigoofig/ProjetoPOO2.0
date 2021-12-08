@@ -34,12 +34,19 @@ public class CadeiaMercados {
      */
     ArrayList<Receipt> allPurchases;
 
+    /**
+     *
+     * @param args console parameters
+     */
     public static void main(String[] args) {
         //inicialize everything
         CadeiaMercados chain = new CadeiaMercados();
         chain.start();
     }
 
+    /**
+     * inicializes the lists and the Lists object
+     */
     public CadeiaMercados() {
         records = new ArrayList<>();
         availableStock = new ArrayList<>();
