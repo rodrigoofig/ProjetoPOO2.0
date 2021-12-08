@@ -1,0 +1,15 @@
+l,35563438,spray de limpeza anticalcario,40.95,85,6
+m,45678909,cadeira,50.0,123,23.3,104x41x41
+a,60714332,frango,5.0,251,239,40
+l,33836497,Ajax floral,2.09,54,7
+m,19227407,mesa,89.90,53,134.4,67x60x234
+a,41964623,maçã,0.14,243,52,3
+l,71400839,limpador desinfetante,3.36,84,8
+m,59364388,candeeiro,5.85,34,0.543,23x4x5
+a,48017505,couve,1.08,78,32,3
+l,55791180,lava tudo limao,2.99,30,8
+m,45690787,prateleira,10.99,32,3.12,3x140x15
+a,34208434,bolacha maria,1.29,153,437.3,43
+l,15791580,detergente lava tudo,3.45,53,7
+m,25650687,estante,87.99,40,34.4,210x30x15
+a,38473434,batatas fritas,1.99,156,312,45

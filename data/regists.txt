@@ -1,0 +1,10 @@
+f,Rodrigo,rio de loba,a,926420597,8/1/2002
+f,Eduardo,R Pescador Bacalhoeiro 82,mus168@sahabatasas.com,923412344,27/1/2002
+r,Pedro,Rua Augusta 132,jrtanto@caraparcal.com,918384753,3/1/2002
+f,Luis,Avenida Paris 63,mstarksmd@goldinbox.net,939348757,17/9/2003
+r,frrancisco,Rua Longuinha 128,ldaniels@emvil.com,925734845,23/5/1993
+r,Vasco,Travessa Parque 70,barabararamirez0093@coduh.site,931231244,7/7/2007
+f,Faria,Colónia Agrícola Casal 1039,levomarrich@notvn.com,934567894,9/5/1999
+r,Daniela,Avenida Duque Ávila 66,smith1238@ecallen.com,926347574,7/10/2010
+r,Melo,R Padre João A L Ribeiro 116,lenikmilaya@kelec.cf,918267379,8/5/2002
+f,Rita,R Outeirô 73,pov91@onlinecmail.com,938123512,23/3/2000

@@ -1,0 +1,8 @@
+lqpt,frango,15/12/2021,18/12/2021
+pm,maçã,13/12/2021,16/12/2021
+lqpt,candeeiro,25/12/2021,26/12/2021
+pm,queijo,17/12/2021,17/12/2021
+lqpt,abrasivo sanitario,1/1/2022,3/1/2022
+pm,batatas fritas,16/12/2021,21/12/2021
+lqpt,bolacha maria,20/12/2021,22/12/2021
+pm,prateleiras,20/12/2021,20/12/2021
