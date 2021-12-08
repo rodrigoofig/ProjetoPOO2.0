@@ -63,8 +63,7 @@ public class CadeiaMercados {
     public void start() {
         Files files = new Files();
         //this is the date that represents the date of the day and can be easily changed
-        Date todaysDate = new Date(14
-                , 12, 2021);
+        Date todaysDate = new Date(14, 12, 2021);
         Scanner s = new Scanner(System.in);
         //every txt used and their respective obj files are inicialized here
         File tfr = new File("data\\regists.txt");
