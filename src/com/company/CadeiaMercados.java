@@ -1,6 +1,8 @@
 package com.company;
 
 import java.io.*;
+import java.sql.SQLOutput;
+import java.sql.Savepoint;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -63,7 +65,7 @@ public class CadeiaMercados {
     public void start() {
         Files files = new Files();
         //this is the date that represents the date of the day and can be easily changed
-        Date todaysDate = new Date(14, 12, 2021);
+        Date todaysDate = new Date(18, 12, 2021);
         Scanner s = new Scanner(System.in);
         //every txt used and their respective obj files are inicialized here
         File tfr = new File("data\\regists.txt");
@@ -71,7 +73,7 @@ public class CadeiaMercados {
         File tfpr = new File("data\\promotions.txt");
         File o = new File("data\\lists.obj");
 
-        String eMail;
+
 
         //if the object files doesnt exist yet , the program runs first with the txt and then create their respective obj file
         if (!o.exists()) {
@@ -85,45 +87,63 @@ public class CadeiaMercados {
             files.listsObjFile(o, lists);
         }
         //this lines check if the email introduced exist
+        int log;
+        Scanner l = new Scanner(System.in);
         do {
-            System.out.print("Login: ");
-            eMail = s.nextLine();
-            if (login(eMail) == 0) {
-                System.out.println("wrong email or email not registed");
-            }
-        } while (login(eMail) == 0);
-
-        System.out.println(" ");
-        System.out.println("login done with success!");
-
-        welcome(eMail, lists.getRecords());
-        System.out.println(" ");
-
-        Sells sell = new Sells();
-        int choice;
-        //Menu for the client choices
-        do {
-            System.out.println("------MENU------");
-            System.out.println("1 - Purchase");
-            System.out.println("2 - Check your purchases");
+            System.out.println("1 - Login");
             System.out.println("0 - EXIT");
-            System.out.println("----------------");
-            System.out.println(" ");
             while (true) {
                 System.out.print("Choice: ");
                 try {
-                    choice = s.nextInt();
+                    log = l.nextInt();
                     break;
                 } catch (InputMismatchException e) {
                     System.out.println("invalid input");
-                    s.nextLine();
+                    l.nextLine();
                 }
             }
 
-            //if he chooses to close the program then all info is saved in the obj files
-            if (choice == 0) {
-                files.objFile(o, lists);
-            }
+            if(log == 1) {
+                String eMail;
+                do {
+                    System.out.print("Login: ");
+                    eMail = s.nextLine();
+                    if (login(eMail) == 0) {
+                        System.out.println("wrong email or email not registed");
+                    }
+                } while (login(eMail) == 0);
+
+                System.out.println(" ");
+                System.out.println("login done with success!");
+
+                welcome(eMail, lists.getRecords());
+                System.out.println(" ");
+
+                Sells sell = new Sells();
+                int choice;
+                //Menu for the client choices
+                do {
+                    System.out.println("------MENU------");
+                    System.out.println("1 - Purchase");
+                    System.out.println("2 - Check your purchases");
+                    System.out.println("0 - Log Out");
+                    System.out.println("----------------");
+                    System.out.println(" ");
+                    while (true) {
+                        System.out.print("Choice: ");
+                        try {
+                            choice = s.nextInt();
+                            break;
+                        } catch (InputMismatchException e) {
+                            System.out.println("invalid input");
+                            s.nextLine();
+                        }
+                    }
+
+                    //if he chooses to close the program then all info is saved in the obj files
+                    if (choice == 0) {
+                        files.objFile(o, lists);
+                    }
             /*
             if she chooses to purchase something then it calls the functions to make the purchase
                 calculate the price of the purchase - totalPrice()
@@ -131,55 +151,58 @@ public class CadeiaMercados {
                 and saves the receipt in the client file - addReceipt()
               In the end of the purchase the program ends too
             */
-            if (choice == 1) {
-                //Purchase menu
-                sell.buy(lists);
+                    if (choice == 1) {
+                        //Purchase menu
+                        sell.buy(lists);
 
-                float pValue = (float) sell.totalPrice(lists.getAvailableStock(), lists.getCart(), lists.getProms(), todaysDate);
-                System.out.println("Price: " + pValue + " euros");
+                        float pValue = (float) sell.totalPrice(lists.getAvailableStock(), lists.getCart(), lists.getProms(), todaysDate);
+                        System.out.println("Price: " + pValue + " euros");
 
-                for (Clients c : lists.getRecords()) {
-                    if (c.getEmail().compareTo(eMail) == 0) {
-                        float tValue = (float) c.transportValue((float) sell.totalPrice(lists.getAvailableStock(), lists.getCart(), lists.getProms(), todaysDate), lists.getCart());
-                        System.out.println("Transport Value: " + tValue);
-                        Receipt r = new Receipt(c.getName(), todaysDate, lists.getCart(), pValue, tValue);
-                        if(pValue >0) {
-                            files.addReceipt(c.getName(), r, lists);
+                        for (Clients c : lists.getRecords()) {
+                            if (c.getEmail().compareTo(eMail) == 0) {
+                                float tValue = (float) c.transportValue((float) sell.totalPrice(lists.getAvailableStock(), lists.getCart(), lists.getProms(), todaysDate), lists.getCart());
+                                System.out.println("Transport Value: " + tValue);
+                                Receipt r = new Receipt(c.getName(), todaysDate, lists.getCart(), pValue, tValue);
+                                if (pValue > 0) {
+                                    files.addReceipt(c.getName(), r, lists);
+                                }
+                            }
                         }
-                    }
-                }
 
-                System.out.println("Thanks for your purchase ");
-            }
+                        System.out.println("Thanks for your purchase ");
+                    }
             /*
             If the client chooses to see his purchases the program prints every purchases - allPurchases() and printReceipt()
              */
-            if (choice == 2) {
-                File f;
-                ArrayList<Receipt> empty = new ArrayList<>();
-                for (Clients c : lists.getRecords()) {
-                    if (c.getEmail().compareTo(eMail) == 0) {
-                        f = new File("clientsPurchases\\" + c.getName() + "file.obj");
-                        if(f.exists()) {
-                            files.listsObjFile(f, lists);
+                    if (choice == 2) {
+                        File f;
+                        ArrayList<Receipt> empty = new ArrayList<>();
+                        for (Clients c : lists.getRecords()) {
+                            if (c.getEmail().compareTo(eMail) == 0) {
+                                f = new File("clientsPurchases\\" + c.getName() + "file.obj");
+                                if (f.exists()) {
+                                    files.listsObjFile(f, lists);
+                                } else {
+                                    System.out.println(" ");
+                                    System.out.println("You didnt make any purchase");
+                                    System.out.println(" ");
+                                }
+                                break;
+                            }
                         }
-                        else {
-                            System.out.println(" ");
-                            System.out.println("You didnt make any purchase");
-                            System.out.println(" ");
+                        for (Receipt r : lists.getAllPurchases()) {
+                            r.printReceipt(lists.getAvailableStock(), lists.getProms());
                         }
-                        break;
+                        lists.setAllPurchases(empty);
+
                     }
-                }
-                for (Receipt r : lists.getAllPurchases()) {
-                    r.printReceipt(lists.getAvailableStock(), lists.getProms());
-                }
-                lists.setAllPurchases(empty);
 
+                } while (choice != 0);
             }
-
-        } while (choice != 0);
-        System.out.println("Thanks for coming !");
+            else{
+                System.out.println("Thanks for coming");
+            }
+        }while(log != 0);
     }
 
     /**
